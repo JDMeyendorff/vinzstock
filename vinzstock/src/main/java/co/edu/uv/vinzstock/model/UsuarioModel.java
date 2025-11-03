@@ -38,8 +38,6 @@ public class UsuarioModel {
     @Column (name ="CONTRASENA")
     private String contrasena;
 
-    @Column (name ="EMAIL")
-    private String email;
 
     @CreationTimestamp
     @Column (name = "FECHA_CREACION")
@@ -52,4 +50,7 @@ public class UsuarioModel {
 
     @Column(name = "ESTADO")
     private boolean estado;
+
+    @Column (name ="EMAIL", nullable = false)
+    private String email;
 }

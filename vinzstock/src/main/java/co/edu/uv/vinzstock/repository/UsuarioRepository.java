@@ -5,10 +5,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface UsuarioRepository extends JpaRepository<UsuarioModel, Long> {
     List<UsuarioModel> findAllByIdUsuario (long idUsuario);
     List<UsuarioModel> findAllByNombreContains (String nombre);
+
+    Optional<UsuarioModel> findByUsuarioLoginAndContrasena(String usuarioLogin, String contrasena);
+
 
 }

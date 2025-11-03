@@ -77,7 +77,7 @@ async function getRoles() {
     roles.value = await res.json()
   } catch {
     // si no existe endpoint, pon roles por defecto:
-    roles.value = [{ idRol: 1, nombre: 'Administrador' }, { idRol: 4, nombre: 'Cajero' }]
+    roles.value = [{ idRol: 1, nombre: 'Administrador' }, { idRol: 2, nombre: 'Cajero' }]
   }
 }
 

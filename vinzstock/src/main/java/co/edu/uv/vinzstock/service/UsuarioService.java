@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UsuarioService {
@@ -21,6 +22,24 @@ public class UsuarioService {
         this.usuarioRepository = usuarioRepository;
         this.rolRepository = rolRespository;
     }
+
+    public UsuarioModel authenticateUsuario(String usuarioLogin, String contrasena) {
+        Optional<UsuarioModel> usuario = usuarioRepository.findByUsuarioLoginAndContrasena(usuarioLogin, contrasena);
+
+        if (usuario.isPresent()) {
+            UsuarioModel user = usuario.get();
+
+            // Verificar si el usuario está activo
+            if (!user.isEstado()) {
+                throw new RuntimeException("Usuario inactivo");
+            }
+
+            return user;
+        } else {
+            throw new RuntimeException("Usuario o contraseña incorrectos");
+        }
+    }
+
 
     public UsuarioModel createUsuario (UsuarioModel usuarioModel){
         if (usuarioModel.getRol() != null && usuarioModel.getRol().getIdRol() > 0) {
