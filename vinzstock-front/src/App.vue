@@ -1,11 +1,10 @@
 <template>
   <div id="app">
-    <Usuarios />
+    <router-view />
   </div>
 </template>
 
 <script setup>
-import Usuarios from './components/Usuarios.vue'
 </script>
 
 <style>

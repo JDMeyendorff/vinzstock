@@ -38,6 +38,9 @@ public class UsuarioModel {
     @Column (name ="CONTRASENA")
     private String contrasena;
 
+    @Column (name ="EMAIL")
+    private String email;
+
     @CreationTimestamp
     @Column (name = "FECHA_CREACION")
     private LocalDate fechaCreacion;
