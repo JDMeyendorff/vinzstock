@@ -13,7 +13,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/vinzstock")
@@ -72,8 +74,26 @@ public class VinzstockController {
     }
 
     @PostMapping(path = "/save")
-    public UsuarioModel saveUsuario(@RequestBody UsuarioModel usuarioModel){
-        return this.usuarioService.createUsuario(usuarioModel);
+    public ResponseEntity saveUsuario(@RequestBody UsuarioModel usuarioModel){
+        try {
+            UsuarioModel nuevoUsuario = this.usuarioService.createUsuario(usuarioModel);
+
+            // Respuesta exitosa
+            Map<String, Object> response = new HashMap<>();
+            response.put("success", true);
+            response.put("message", "Usuario creado exitosamente");
+            response.put("data", nuevoUsuario);
+
+            return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        } catch(RuntimeException e){
+            // Capturar el error y devolverlo en formato JSON
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("success", false);
+            errorResponse.put("message", e.getMessage());
+
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+
+            }
     }
 
     @PutMapping (path = "/update")

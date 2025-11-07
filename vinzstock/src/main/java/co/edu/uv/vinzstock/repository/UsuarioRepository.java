@@ -15,4 +15,14 @@ public interface UsuarioRepository extends JpaRepository<UsuarioModel, Long> {
     Optional<UsuarioModel> findByUsuarioLoginAndContrasena(String usuarioLogin, String contrasena);
 
 
+    boolean existsByNuip(long nuip);
+    boolean existsByUsuarioLogin(String usuarioLogin);
+    boolean existsByEmail(String email);
+
+    Optional<UsuarioModel> findByEmail(String email);
+
+    Optional<UsuarioModel> findByNuip(long nuip);
+
+    Optional<UsuarioModel> findByUsuarioLogin(String usuarioLogin);
+
 }

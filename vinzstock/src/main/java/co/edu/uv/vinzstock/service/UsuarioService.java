@@ -31,12 +31,19 @@ public class UsuarioService {
 
             // Verificar si el usuario está activo
             if (!user.isEstado()) {
-                throw new RuntimeException("Usuario inactivo");
+                throw new RuntimeException("Usuario inactivo, por favor comuniquese con el administrador.");
             }
 
             return user;
         } else {
             throw new RuntimeException("Usuario o contraseña incorrectos");
+        }
+    }
+
+
+    public class UsuarioDuplicadoException extends RuntimeException {
+        public UsuarioDuplicadoException(String campo, String valor) {
+            super("Ya existe un usuario con el " + campo + ": " + valor);
         }
     }
 
@@ -51,6 +58,21 @@ public class UsuarioService {
             usuarioModel.setRol(rol);
         } else {
             throw new RuntimeException("Debe especificar un rol válido");
+        }
+
+        if (usuarioRepository.existsByNuip(usuarioModel.getNuip())){
+            throw new UsuarioDuplicadoException("NUIP", usuarioModel.getUsuarioLogin());
+
+        }
+
+        if (usuarioRepository.existsByEmail(usuarioModel.getEmail())){
+            throw new UsuarioDuplicadoException("EMAIL", usuarioModel.getUsuarioLogin());
+
+        }
+
+        if (usuarioRepository.existsByUsuarioLogin(usuarioModel.getUsuarioLogin())){
+            throw new UsuarioDuplicadoException("USERNAME", usuarioModel.getUsuarioLogin());
+
         }
         return this.usuarioRepository.save(usuarioModel);
     }
